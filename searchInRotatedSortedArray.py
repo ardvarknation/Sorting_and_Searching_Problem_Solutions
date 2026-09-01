@@ -16,4 +16,40 @@
 # - nums is an ascending array possibly rotated
 # - -10^4 <= target <= 10^4
 
-#####TOBECOMPLETED#############
+# Complexity:
+# - Time: O(log n)
+# - Space: O(n)
+
+def search(self, nums: List[int], target: int) -> int:
+  # Initialise pointers for binary search
+  left, right = 0, len(nums) - 1
+
+  # Continue searching while search space remains valid
+  while left <= right:
+    # Find middle index
+    mid = (left + right) // 2
+
+    # Target found
+    if nums[mid] == target:
+      return mid
+
+    # Check if left half is sorted
+    if nums[left] <= nums[mid]:
+      if nums[left] <= target < nums[mid]:
+        # Search left half
+        right = mid - 1
+      else:
+        # Search right half
+        left = mid + 1
+    else:
+      # Determine if the target in sorted right half
+      if nums[mid] < target <= nums[right]:
+        # Search right half
+        left = mid + 1
+      else:
+        # Search left half
+        right = mid - 1
+
+  # Target not found
+  return -1
+  
